@@ -1,7 +1,7 @@
 #Security Examples
 Software Development focus on various examples, theory related to authentication, authorisation,  certificates etc 
 
-This repository will contain no internal information. All examples etc. will be described from a principal perspective.
+***This repository will contain no internal information.*** All examples etc. will be described and demoed from a principal perspective.
 
 
 #Scenarios
