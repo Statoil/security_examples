@@ -12,6 +12,7 @@ Scenarios that we should explain and demonstrate with example code.
 * Single Sign-On (SSO)
 * SAML, Kerberos, OAuth, JWT
 * Human to machine, Machine to machine
+* PGP (GnuPG)
 
 ###Authentication
 * Authenticate towards Azure AD
