@@ -11,7 +11,7 @@ Scenarios that we should explain and demonstrate with example code.
 * Certificates
 * Single Sign-On (SSO)
 * SAML, Kerberos, OAuth, JWT
-* Human to machine, Machine to machine
+* Human to machine, Machine to machine, Human to machine to machine (impersonation)
 * PGP (GnuPG)
 
 ###Authentication
@@ -21,3 +21,6 @@ Scenarios that we should explain and demonstrate with example code.
 ###Authorisation
 * Authorize with Azure AD
 * Authorize with local AD
+
+###Use cases
+* Logged in to statoil pc in office. When navigating to a statoil web application, application should single sign on based upon users login, using oauth/jwt, send the token on to application server. And added bonus if the token can be used/forwarded to a database requiring kerberos ticket. Application server should be able to read token and authorize access, i.e the token should contain the claims from AD.
