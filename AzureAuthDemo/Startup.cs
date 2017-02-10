@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace AzureAuthDemo
 {
     public class Startup
     {
+        
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -45,6 +47,8 @@ namespace AzureAuthDemo
                     options.AddPolicy("CanAccessVIPArea",policyBuilder => policyBuilder.RequireClaim("groups","e9ad44ca-0dc5-43f8-8f72-3cdd67c543a2"));
                     //options.AddPolicy("IsDomainUser",policyBuilder => policyBuilder.RequireClaim("16f810be-e279-4e22-81c1-62f4946ca506"));
                 });
+
+               
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,9 +68,13 @@ namespace AzureAuthDemo
             }
 
             app.UseStaticFiles();
-
-            app.UseCookieAuthentication();
-
+            
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                SessionStore = new MemoryCacheStore(new MemoryCache(new MemoryCacheOptions()))
+            });
+            app.UseClaimsTransformation();
+            
             var options = new OpenIdConnectOptions
             {
                 ClientId = Environment.GetEnvironmentVariable("ASPNETCORE_CLIENTID"),
@@ -74,18 +82,10 @@ namespace AzureAuthDemo
                 Authority = Configuration["Authentication:AzureAd:AADInstance"] + Environment.GetEnvironmentVariable("ASPNETCORE_TENANTID"),
                 CallbackPath = Configuration["Authentication:AzureAd:CallbackPath"],
                 ResponseType = OpenIdConnectResponseType.CodeIdToken,
-                
-                
             };
             options.SaveTokens=true;
-            options.GetClaimsFromUserInfoEndpoint=true;
             options.Scope.Add("address");
             options.Scope.Add("email");
-            options.Scope.Add("profile");
-            var tokenValidationParameters = new TokenValidationParameters();
-            tokenValidationParameters.RoleClaimType = "roles";
-           
-            options.TokenValidationParameters = tokenValidationParameters;
                     
             app.UseOpenIdConnectAuthentication(options);
             
