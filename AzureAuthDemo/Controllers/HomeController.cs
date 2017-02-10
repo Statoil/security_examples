@@ -17,8 +17,8 @@ namespace AzureAuthDemo.Controllers
         }
 
     
-        //[Authorize(Policy = "CanAccessVIPArea")]
-        [Authorize]
+        [Authorize(Policy = "CanAccessVIPArea")]
+        //[Authorize]
         public IActionResult About()
         {
             
