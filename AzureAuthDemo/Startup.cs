@@ -47,8 +47,6 @@ namespace AzureAuthDemo
                     options.AddPolicy("CanAccessVIPArea",policyBuilder => policyBuilder.RequireClaim("groups","e9ad44ca-0dc5-43f8-8f72-3cdd67c543a2"));
                     //options.AddPolicy("IsDomainUser",policyBuilder => policyBuilder.RequireClaim("16f810be-e279-4e22-81c1-62f4946ca506"));
                 });
-
-               
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
