@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,11 @@ namespace AzureAuthDemo.Controllers
         }
 
     
-        [Authorize(Roles = "AdminGroup")]
+        //[Authorize(Policy = "CanAccessVIPArea")]
+        [Authorize]
         public IActionResult About()
         {
+            
             ViewData["Message"] = "Your application description page.";
 
             return View();
@@ -26,7 +29,8 @@ namespace AzureAuthDemo.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+           
+            ViewData["Message"] = "NA";
 
             return View();
         }
@@ -39,8 +43,6 @@ namespace AzureAuthDemo.Controllers
         public IActionResult AccessDenied(){
             ViewData["Message"] = "Access Denied!";
             return View();
-
-
         }
     }
 }
