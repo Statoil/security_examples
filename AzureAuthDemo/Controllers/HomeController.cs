@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AzureAuthDemo.Controllers
@@ -30,7 +25,7 @@ namespace AzureAuthDemo.Controllers
         public IActionResult Contact()
         {
            
-            ViewData["Message"] = "NA";
+            ViewData["Message"] = "This table list all information retrived from AAD on the current user.";
 
             return View();
         }

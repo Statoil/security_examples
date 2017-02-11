@@ -1,27 +1,31 @@
-# Security Examples  
+# Security Examples
+
 First sample application.
 
-Sample is taken from Visual Studio template and modified to better work with owr environment.  
+Sample is taken from Visual Studio template and modified to better work with owr environment.
 
 Application is written in C# using .Net Core 1.1
 
-This application demonstrate the step needed to get authentication working from an web application using 
+This application demonstrate the step needed to get authentication working from an web application using
 Azure Active Directory(AAD).
 
 ## Prerequisite
+
 ----
 Computer with Windows, Linux or macOS.
 
-.Net Core 1.1 from [.Net Core](https://www.microsoft.com/net/core#macos). 
+.Net Core 1.1 from [.Net Core](https://www.microsoft.com/net/core#macos).
 
 A working Git client(or just download the zip file)
 
-Access to an AAD tenantId 
+Access to an AAD tenantId
 
 Access to create a new "App registration" in AAD
 
-## Steps to get the application installed and running.
+## Steps to get the application installed and running
+
 ### Azure registration
+
 ----
 Open the [Azure Portal](https://portal.azure.com/) and select Azure Active Directory on the left side.
 
@@ -31,7 +35,7 @@ Fill in Application name.
 
 Select Web app/API
 
-Fill in http://localhost:5050/signin-oidc as Sign-in URL
+Fill in [http://localhost:5050/signin-oidc](http://localhost:5050/signin-oidc) as Sign-in URL
 
 Push create button.
 
@@ -41,35 +45,46 @@ This is the client id enviroment variable.
 Select Required permissions for the new app registration.
 Verify that there is a permissions selected to use AAD and Sign in and read user profile.
 
-Create a client secret by create a new key. Enter a name select a duration and push save this key will only be 
+Create a client secret by create a new key. Enter a name select a duration and push save this key will only be
 showed once so take a note. This value is the client secret environment variable.
 
 We now need to find the tenant id, so we push the AAD button on the left side of the screen, then properties
 copy the value from then field Directory ID. This is the tenant id environment variable.
 
 ### Download the sample application from github
+
 ----
-Use your favorite git client or just download a zip file from github.com.
+Use your favorite git client to clone the repo or just download zip file.
 
-### Register the needed environment variables.
+### Register the needed user secrets
+
 ----
-On macOS and Linux you can use:
+To make it simpler developing new features I have moved to use user-secrets for this version, user secrest are
+some what missleading as the keys are not ecrypted in any way, it is just moves outside the project directory to help not
+storing them in the source control system.
+To set it up go to the application source folder and type in the following commands:
+
 ```python
-export ASPNETCORE_CLIENTID="Value from above step"
+dotnet user-secrets set AppSettings:TenantId "TenantId"
+dotnet user-secrets set AppSettings:ClientSecret "ClientSecret"
+dotnet user-secrets set AppSettings:ClientId "ClientId"
+````
 
-export ASPNETCORE_TENANTID="Value from above step"
+If you run this from a terminal you need to set an enviroment variable like this:
 
-export ASPNETCORE_CLIENTSECRET="Value from above step
-```
-On windows use:
+macOS and Linux
+
 ```python
-set ASPNETCORE_CLIENTID="Value from above step"
+export ASPNETCORE_ENVIRONMENT=Development
+````
 
-set ASPNETCORE_TENANTID="Value from above step"
-
-set ASPNETCORE_CLIENTSECRET="Value from above step
+or if on windows:
+```python
+set ASPNETCORE_ENVIRONMENT=Development
 ```
+
 ### Build and run the samle application
+
 ----
 Open a terminal/command prompt and navigate to the directory where the application is.
 
@@ -81,11 +96,10 @@ Build using "dotnet build"
 
 Run with "dotnet run"
 
-Open a webbrowser and navigate to https://localhost:5050.
+Open a webbrowser and navigate to [https://localhost:5050](https://localhost:5050).
 
-You will be prompted to allow the application to use your information after accepting this you 
+You will be prompted to allow the application to use your information after accepting this you
 
 will be auhtenticated and loged in to the application.
 
-If all works well you can try to extend the application to support claims based authorization. 
-
+If all works well you can try to extend the application to support claims based authorization.

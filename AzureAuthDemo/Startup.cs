@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Memory;
@@ -7,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AzureAuthDemo
 {
@@ -75,20 +73,16 @@ namespace AzureAuthDemo
             
             var options = new OpenIdConnectOptions
             {
-                ClientId = Environment.GetEnvironmentVariable("ASPNETCORE_CLIENTID"),
-                ClientSecret = Environment.GetEnvironmentVariable("ASPNETCORE_CLIENTSECRET"),
-                Authority = Configuration["Authentication:AzureAd:AADInstance"] + Environment.GetEnvironmentVariable("ASPNETCORE_TENANTID"),
+                ClientId = Configuration["AppSettings:ClientId"],
+                ClientSecret =Configuration["AppSettings:ClientSecret"],
+                Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["AppSettings:TenantId"],
                 CallbackPath = Configuration["Authentication:AzureAd:CallbackPath"],
                 ResponseType = OpenIdConnectResponseType.CodeIdToken,
             };
             options.SaveTokens=true;
-            options.Scope.Add("address");
-            options.Scope.Add("email");
                     
             app.UseOpenIdConnectAuthentication(options);
             
-            
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
