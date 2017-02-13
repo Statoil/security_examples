@@ -51,6 +51,10 @@ showed once so take a note. This value is the client secret environment variable
 We now need to find the tenant id, so we push the AAD button on the left side of the screen, then properties
 copy the value from then field Directory ID. This is the tenant id environment variable.
 
+Change the manifest to include groups, in the portal click the Manifest button and then Edit, change the line "groupMembershipClaims": "none" 
+to "groupMembershipClaims": "SecurityGroup" or "All" if you like to have all groups provided as claims. For this demo app SecurityGroup
+is the prefered one to limit number of claims.
+
 ### Download the sample application from github
 
 ----
@@ -79,6 +83,7 @@ export ASPNETCORE_ENVIRONMENT=Development
 ````
 
 or if on windows:
+
 ```python
 set ASPNETCORE_ENVIRONMENT=Development
 ```
