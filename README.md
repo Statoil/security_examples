@@ -5,7 +5,7 @@ Software Development focus on various examples, theory related to authentication
 
 
 #Scenarios
-Scenarios that we should explain and demonstrate with example code. 
+[Web Application Autentication towards Azure Acticve Directory](https://github.com/Statoil/security_examples/tree/master/AzureAuthDemo)
 
 ###Principles
 * Certificates
