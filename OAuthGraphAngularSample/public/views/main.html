@@ -1,0 +1,114 @@
+<!--  Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+        See LICENSE in the source repository root for complete license information. -->
+<div class="ms-Grid-row">
+  <!-- App navigation bar markup. -->
+  <div class="ms-NavBar">
+    <ul class="ms-NavBar-items">
+      <li class="navbar-header">Microsoft Graph Connect sample</li>
+      <li class="ms-NavBar-item ms-NavBar-item--right" ng-show="main.isAuthenticated()" ng-click="main.logout()"><i class="ms-Icon ms-Icon--x"></i> Disconnect</li>
+    </ul>
+  </div>
+
+  <!-- App main content markup. -->
+  <div class="ms-Grid-col ms-u-mdPush1 ms-u-md9 ms-u-lgPush1 ms-u-lg6">
+    <div ng-hide="main.isAuthenticated()">
+      <p class="ms-font-xl">Use the button below to connect to Microsoft Graph.</p>
+      <button class="ms-Button" ng-click="main.login()">
+        <span class="ms-Button-label">Connect</span>
+      </button>
+    </div>
+
+
+
+    <div ng-show="main.isAuthenticated()">
+
+      <h2 class="ms-font-xxl ms-fontWeight-semibold">Hi, {{ main.displayName }}!</h2>
+      <p class="ms-font-xl">You're now connected to Microsoft Graph. Click the buttons below to interact with  Microsoft Graph API. </p>
+
+      <p class="ms-font-xl">Graph options</p>
+      <ul class="ms-Pivot ms-Pivot--tabs ms-Pivot--large">
+        <li class="ms-Pivot-link" ng-click="main.changeTab('send')" ng-class="main.sendEmailActive ? 'is-selected' : ''">Send email</li>
+        <li class="ms-Pivot-link" ng-click="main.changeTab('read')" ng-class="main.readEmailActive ? 'is-selected' : ''">Read email</li>
+        <li class="ms-Pivot-link" ng-click="main.changeTab('event')" ng-class="main.readEventActive ? 'is-selected' : ''">Read events</li>  
+      </ul>
+
+ <p>
+
+    <div ng-show="main.sendEmailActive">
+      <p />
+      <div  class="ms-TextField">
+        <label class="ms-font-m">TO:</label>
+        <input ng-model="main.emailAddress" class="ms-TextField-field">
+        <label class="ms-font-m">SUBJECT:</label>
+        <input ng-model="main.emailSubject" class="ms-TextField-field" size="100">
+        <label class="ms-font-m">BODY:</label>
+        <textarea ng-model="main.emailContent" class="XXms-TextField-field" cols="70" rows="20" ></textarea>
+      <button class="ms-Button" ng-click="main.sendMail()">
+        <span class="ms-Button-label">Send mail</span>
+      </button>
+      </div>
+      <div ng-show="main.sendSuccess && main.sendRequestFinished">
+        <p class="ms-font-m ms-fontColor-green">Successfully sent an email to {{ main.emailAddressSent }}!</p>
+      </div>
+      <div ng-show="!main.sendSuccess && main.sendRequestFinished">
+        <p class="ms-font-m ms-fontColor-redDark">Something went wrong, could not send an email.</p>
+      </div>
+      <p />
+    </div>
+
+   
+
+      <!-- Read mail -->
+      <div ng-show="main.readEmailActive">
+        <p />
+      <div  class="ms-TextField">
+      <label class="ms-font-m">FILTER FROM:</label>
+        <input ng-model="main.sender" class="ms-TextField-field">
+      </div>
+      <button class="ms-Button" ng-click="main.readMail()">
+        <span class="ms-Button-label">Get mail</span>
+      </button>
+      <div ng-show="main.readSuccess && main.readRequestFinished">
+        <p class="ms-font-m ms-fontColor-green">Successfully read emails!</p>
+        <ul class="ms-List">
+        <div ng-repeat="mail in main.emails.value">
+          <li class="ms-ListItem">Mail with subject: <b>"{{mail.subject}}"</b> item was created {{mail.createdDateTime}}
+            <p>
+              <a href="#" ng-click="showEmail = ! showEmail">{{mail.bodyPreview}}[more]...</a>
+              <div ng-show="showEmail">content: {{mail.body.content}}</div></p>
+              </li>
+        </div>
+        </ul>
+      </div>
+      <div ng-show="!main.readSuccess && main.readRequestFinished">
+        <p class="ms-font-m ms-fontColor-redDark">Something went wrong, could not read emails.</p>
+      </div>
+      <p />
+      </div>
+
+ <!-- Read events -->
+      <div  ng-show="main.readEventActive">
+        <p />
+      <button class="ms-Button" ng-click="main.readEvents()">
+        <span class="ms-Button-label">Get events</span>
+      </button>
+      <div ng-show="main.readEventsFinished && main.readEventsSuccess">
+        <p class="ms-font-m ms-fontColor-green">Successfully read events!</p>
+        <ul class="ms-List">
+        <div ng-repeat="event in main.events.value">
+          <li class="ms-ListItem">Events: <b>{{event.subject}}</b> item was created {{event.createdDateTime}}
+            <div><a href="{{event.webLink}}" target="_blank">Content</a></div>              
+          </li>
+        </div>
+        </ul>
+      </div>
+      <div ng-show="!main.readEventsSuccess && main.readEventsFinished">
+        <p class="ms-font-m ms-fontColor-redDark">Something went wrong, could not read events.</p>
+      </div>
+      </div>
+
+    </p>
+
+    </div>
+  </div>
+</div>
