@@ -77,6 +77,8 @@ Register the needed environment variables using the above step.
 
 Restore needed .Net packages using "dotnet restore"
 
+If this fails first run "dotnet migrate"
+
 Build using "dotnet build"
 
 Run with "dotnet run"
